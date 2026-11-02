@@ -4,13 +4,18 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useAppDispatch } from "@/lib/hooks";
 import { login } from "@/features/auth/authSlice";
+import { validateLoginForm } from "@/features/auth/authValidation";
 import styles from "./login.module.css";
 
 export default function LoginPage() {
-  const [email, setEmail] = useState("");
+  const [identifier, setIdentifier] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  const [errors, setErrors] = useState<{
+    identifier?: string;
+    password?: string;
+  }>({});
   const [isChecking, setIsChecking] = useState(true);
+
   const router = useRouter();
   const dispatch = useAppDispatch();
 
@@ -28,16 +33,17 @@ export default function LoginPage() {
   function handleSubmit(e: React.SubmitEvent<HTMLFormElement>) {
     e.preventDefault();
 
-    setError("");
+    const validationErrors = validateLoginForm(identifier, password);
 
-    if (!email.trim() || !password.trim()) {
-      setError("Please fill in all fields.");
+    setErrors(validationErrors);
+
+    if (Object.keys(validationErrors).length > 0) {
       return;
     }
 
-    // Simulate successful authentication
     localStorage.setItem("isAuthenticated", "true");
     dispatch(login());
+
     router.push("/users");
   }
 
@@ -48,39 +54,47 @@ export default function LoginPage() {
   return (
     <main className={styles.main}>
       <div className={styles.card}>
-        {/* Branding */}
         <div className={styles.branding}>
           <h1 className={styles.title}>Users Dashboard</h1>
-
           <p className={styles.subtitle}>Manage and explore user information</p>
         </div>
 
-        {/* Heading */}
         <div className={styles.heading}>
           <h2 className={styles.headingTitle}>Welcome back</h2>
-
           <p className={styles.headingSubtitle}>
             Please enter your credentials to sign in.
           </p>
         </div>
 
-        {/* Login Form */}
-        <form className={styles.form} onSubmit={handleSubmit}>
+        <form className={styles.form} onSubmit={handleSubmit} noValidate>
           <div className={styles.formGroup}>
-            <label htmlFor="email" className={styles.label}>
-              Email address
+            <label htmlFor="identifier" className={styles.label}>
+              Email or Username
             </label>
 
             <input
-              id="email"
-              name="email"
-              type="email"
-              placeholder="you@example.com"
-              autoComplete="email"
+              id="identifier"
+              name="identifier"
+              type="text"
+              placeholder="Enter your email or username"
+              autoComplete="username"
               className={styles.input}
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              value={identifier}
+              aria-invalid={!!errors.identifier}
+              aria-describedby={
+                errors.identifier ? "identifier-error" : undefined
+              }
+              onChange={(e) => {
+                setIdentifier(e.target.value);
+                setErrors((prev) => ({ ...prev, identifier: undefined }));
+              }}
             />
+
+            {errors.identifier && (
+              <p id="identifier-error" className={styles.error}>
+                {errors.identifier}
+              </p>
+            )}
           </div>
 
           <div className={styles.formGroup}>
@@ -96,11 +110,20 @@ export default function LoginPage() {
               autoComplete="current-password"
               className={styles.input}
               value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              aria-invalid={!!errors.password}
+              aria-describedby={errors.password ? "password-error" : undefined}
+              onChange={(e) => {
+                setPassword(e.target.value);
+                setErrors((prev) => ({ ...prev, password: undefined }));
+              }}
             />
-          </div>
 
-          {error && <p className={styles.error}>{error}</p>}
+            {errors.password && (
+              <p id="password-error" className={styles.error}>
+                {errors.password}
+              </p>
+            )}
+          </div>
 
           <button type="submit" className={styles.submitButton}>
             Sign in

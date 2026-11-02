@@ -106,7 +106,9 @@
 
 .error {
   color: #dc2626;
-  font-size: 0.875rem;
+  font-size: 0.8rem;
+  margin-top: 5px;
+  line-height: 1.4;
 }
 
 .success {
