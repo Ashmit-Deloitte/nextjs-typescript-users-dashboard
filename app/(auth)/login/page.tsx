@@ -1,12 +1,26 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import styles from "./login.module.css";
+
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+  const router = useRouter();
+  const [isChecking, setIsChecking] = useState(true);
+
+  useEffect(() => {
+    const isAuthenticated = localStorage.getItem("isAuthenticated") === "true";
+
+    if (isAuthenticated) {
+      router.replace("/users");
+    } else {
+      setIsChecking(false);
+    }
+  }, [router]);
 
   function handleSubmit(e: React.SubmitEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -19,12 +33,17 @@ export default function LoginPage() {
       return;
     }
 
-    setSuccess("Form submitted successfully!");
-    console.log({ email, password });
+    // Simulate successful authentication
+    localStorage.setItem("isAuthenticated", "true");
+    router.push("/users");
   }
 
   console.log(email);
   console.log(password);
+  if (isChecking) {
+    return <p>Checking authentication...</p>;
+  }
+
   return (
     <main className={styles.main}>
       <div className={styles.card}>
