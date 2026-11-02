@@ -26,3 +26,9 @@
 .logoutButton:hover {
   background-color: #4338ca;
 }
+
+.headerActions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}

@@ -5,7 +5,7 @@ import { validateLoginForm } from "@/features/auth/authValidation";
 import styles from "./LoginForm.module.css";
 
 interface LoginFormProps {
-  onLogin: () => void;
+  onLogin: (identifier: string) => void;
 }
 
 interface LoginErrors {
@@ -29,7 +29,7 @@ export default function LoginForm({ onLogin }: LoginFormProps) {
       return;
     }
 
-    onLogin();
+    onLogin(identifier.trim());
   }
 
   function handleIdentifierChange(value: string) {

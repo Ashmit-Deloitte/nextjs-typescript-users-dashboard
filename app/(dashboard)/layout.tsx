@@ -14,8 +14,10 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
   const dispatch = useAppDispatch();
 
   const isAuthenticated = useAppSelector((state) => state.auth.isAuthenticated);
+  const identifier = useAppSelector((state) => state.auth.identifier);
   const handleLogout = () => {
     localStorage.removeItem("isAuthenticated");
+    localStorage.removeItem("loggedInIdentifier");
 
     dispatch(logout());
 
@@ -23,9 +25,10 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
   };
   useEffect(() => {
     const storedAuth = localStorage.getItem("isAuthenticated");
+    const storedIdentifier = localStorage.getItem("loggedInIdentifier");
 
-    if (storedAuth === "true") {
-      dispatch(login());
+    if (storedAuth === "true" && storedIdentifier) {
+      dispatch(login(storedIdentifier));
     } else {
       dispatch(logout());
       router.replace("/login");
@@ -43,9 +46,13 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
       <header className={styles.header}>
         <h2>Users Dashboard</h2>
 
-        <button onClick={handleLogout} className={styles.logoutButton}>
-          Logout
-        </button>
+        <div className={styles.headerActions}>
+          <span>{identifier}</span>
+
+          <button onClick={handleLogout} className={styles.logoutButton}>
+            Logout
+          </button>
+        </div>
       </header>
 
       {children}

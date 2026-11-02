@@ -19,19 +19,21 @@ export default function LoginPage() {
 
   useEffect(() => {
     const storedAuth = localStorage.getItem("isAuthenticated");
+    const storedIdentifier = localStorage.getItem("loggedInIdentifier");
 
-    if (storedAuth === "true") {
-      dispatch(login());
+    if (storedAuth === "true" && storedIdentifier) {
+      dispatch(login(storedIdentifier));
       router.replace("/users");
     } else {
       setIsChecking(false);
     }
   }, [dispatch, router]);
 
-  function handleLogin() {
+  function handleLogin(identifier: string) {
     localStorage.setItem("isAuthenticated", "true");
+    localStorage.setItem("loggedInIdentifier", identifier);
 
-    dispatch(login());
+    dispatch(login(identifier));
 
     router.push("/users");
   }
