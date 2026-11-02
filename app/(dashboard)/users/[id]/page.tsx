@@ -2,11 +2,41 @@
 
 import Link from "next/link";
 import { useParams } from "next/navigation";
+import type { ReactNode } from "react";
+import {
+  ArrowLeft,
+  Building2,
+  CircleAlert,
+  Mail,
+  MapPin,
+  RefreshCw,
+} from "lucide-react";
 import { useGetUserByIdQuery } from "@/features/users/usersApi";
 import styles from "./userDetails.module.css";
 
 import UserProfileHeader from "@/components/users/UserProfileHeader";
 import DetailSection from "@/components/users/DetailsSection";
+
+// Shared layout for the invalid / error states
+function StatusCard({
+  message,
+  children,
+}: {
+  message: string;
+  children?: ReactNode;
+}) {
+  return (
+    <main className={styles.container}>
+      <div className={styles.statusCard} role="alert">
+        <div className={styles.statusIcon}>
+          <CircleAlert size={24} aria-hidden="true" />
+        </div>
+        <p className={styles.statusText}>{message}</p>
+        <div className={styles.statusActions}>{children}</div>
+      </div>
+    </main>
+  );
+}
 
 export default function UserDetailsPage() {
   const params = useParams<{ id: string }>();
@@ -24,20 +54,55 @@ export default function UserDetailsPage() {
   });
 
   if (!isValidId) {
-    return <p>Invalid user ID.</p>;
+    return (
+      <StatusCard message="Invalid user ID.">
+        <a href="/users" className={styles.secondaryLink}>
+          <ArrowLeft size={16} aria-hidden="true" />
+          <span>Back to Users</span>
+        </a>
+      </StatusCard>
+    );
   }
 
   if (isLoading) {
-    return <p>Loading user details...</p>;
+    return (
+      <main
+        className={styles.container}
+        role="status"
+        aria-live="polite"
+        aria-label="Loading user details"
+      >
+        <span className={styles.skeletonBack} />
+        <div className={styles.skeletonHeader} />
+
+        <div className={styles.detailsGrid}>
+          {Array.from({ length: 3 }, (_, index) => (
+            <div key={index} className={styles.skeletonCard}>
+              <span className={styles.skeletonTitle} />
+              <span className={styles.skeletonLine} />
+              <span className={styles.skeletonLine} />
+              <span className={`${styles.skeletonLine} ${styles.short}`} />
+            </div>
+          ))}
+        </div>
+
+        <span className={styles.srOnly}>Loading user details...</span>
+      </main>
+    );
   }
 
   if (isError || !user) {
     return (
-      <div>
-        <p>Unable to load user details. The user may not exist.</p>
-        <button onClick={() => refetch()}>Try Again</button>
-        <a href="/users">Back to Users</a>
-      </div>
+      <StatusCard message="Unable to load user details. The user may not exist.">
+        <button onClick={() => refetch()} className={styles.primaryButton}>
+          <RefreshCw size={16} aria-hidden="true" />
+          <span>Try Again</span>
+        </button>
+        <a href="/users" className={styles.secondaryLink}>
+          <ArrowLeft size={16} aria-hidden="true" />
+          <span>Back to Users</span>
+        </a>
+      </StatusCard>
     );
   }
 
@@ -80,17 +145,26 @@ export default function UserDetailsPage() {
   return (
     <main className={styles.container}>
       <Link href="/users" className={styles.backButton}>
-        <span aria-hidden="true">←</span> Back to Users
+        <ArrowLeft size={18} className={styles.backIcon} aria-hidden="true" />
+        <span>Back to Users</span>
       </Link>
 
       <UserProfileHeader user={user} />
 
       <div className={styles.detailsGrid}>
-        <DetailSection title="Contact Information" items={contactItems} />
+        <DetailSection
+          title="Contact Information"
+          icon={Mail}
+          items={contactItems}
+        />
 
-        <DetailSection title="Address" items={addressItems} />
+        <DetailSection title="Address" icon={MapPin} items={addressItems} />
 
-        <DetailSection title="Company Details" items={companyItems} />
+        <DetailSection
+          title="Company Details"
+          icon={Building2}
+          items={companyItems}
+        />
       </div>
     </main>
   );

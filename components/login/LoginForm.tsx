@@ -1,6 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import { ArrowRight, Lock, User } from "lucide-react";
+
 import { validateLoginForm } from "@/features/auth/authValidation";
 import styles from "./LoginForm.module.css";
 
@@ -57,18 +59,24 @@ export default function LoginForm({ onLogin }: LoginFormProps) {
           Email or Username
         </label>
 
-        <input
-          id="identifier"
-          name="identifier"
-          type="text"
-          placeholder="Enter your email or username"
-          autoComplete="username"
-          className={styles.input}
-          value={identifier}
-          aria-invalid={!!errors.identifier}
-          aria-describedby={errors.identifier ? "identifier-error" : undefined}
-          onChange={(e) => handleIdentifierChange(e.target.value)}
-        />
+        <div className={styles.inputWrapper}>
+          <User size={18} className={styles.icon} aria-hidden="true" />
+
+          <input
+            id="identifier"
+            name="identifier"
+            type="text"
+            placeholder="Enter your email or username"
+            autoComplete="username"
+            className={styles.input}
+            value={identifier}
+            aria-invalid={!!errors.identifier}
+            aria-describedby={
+              errors.identifier ? "identifier-error" : undefined
+            }
+            onChange={(e) => handleIdentifierChange(e.target.value)}
+          />
+        </div>
 
         {errors.identifier && (
           <p id="identifier-error" className={styles.error}>
@@ -82,18 +90,22 @@ export default function LoginForm({ onLogin }: LoginFormProps) {
           Password
         </label>
 
-        <input
-          id="password"
-          name="password"
-          type="password"
-          placeholder="Enter your password"
-          autoComplete="current-password"
-          className={styles.input}
-          value={password}
-          aria-invalid={!!errors.password}
-          aria-describedby={errors.password ? "password-error" : undefined}
-          onChange={(e) => handlePasswordChange(e.target.value)}
-        />
+        <div className={styles.inputWrapper}>
+          <Lock size={18} className={styles.icon} aria-hidden="true" />
+
+          <input
+            id="password"
+            name="password"
+            type="password"
+            placeholder="Enter your password"
+            autoComplete="current-password"
+            className={styles.input}
+            value={password}
+            aria-invalid={!!errors.password}
+            aria-describedby={errors.password ? "password-error" : undefined}
+            onChange={(e) => handlePasswordChange(e.target.value)}
+          />
+        </div>
 
         {errors.password && (
           <p id="password-error" className={styles.error}>
@@ -103,7 +115,13 @@ export default function LoginForm({ onLogin }: LoginFormProps) {
       </div>
 
       <button type="submit" className={styles.submitButton}>
-        Sign in
+        <span>Sign in</span>
+        <ArrowRight
+          size={18}
+          strokeWidth={2.25}
+          className={styles.arrow}
+          aria-hidden="true"
+        />
       </button>
     </form>
   );

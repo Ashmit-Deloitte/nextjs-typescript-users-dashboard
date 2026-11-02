@@ -39,7 +39,14 @@ export default function LoginPage() {
   }
 
   if (isChecking) {
-    return <p>Checking authentication...</p>;
+    return (
+      <main className={styles.main}>
+        <div className={styles.loader} role="status" aria-live="polite">
+          <span className={styles.spinner} aria-hidden="true" />
+          <p>Checking authentication...</p>
+        </div>
+      </main>
+    );
   }
 
   return (

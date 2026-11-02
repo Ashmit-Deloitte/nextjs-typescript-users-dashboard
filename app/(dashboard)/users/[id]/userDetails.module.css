@@ -2,44 +2,267 @@
   width: 100%;
   max-width: 1100px;
   margin: 0 auto;
-  padding: 2.5rem 2rem;
+  padding: 1.5rem 1rem 3rem;
 }
 
-/* Back Button */
-
+/* Back button */
 .backButton {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  margin-bottom: 2rem;
-  color: #4f46e5;
-  text-decoration: none;
-  font-size: 0.95rem;
+
+  margin-bottom: 1.5rem;
+  padding: 0.5rem 0.875rem 0.5rem 0.625rem;
+
+  font-size: 0.875rem;
   font-weight: 600;
-  transition: color 0.2s ease;
+  color: #4338ca;
+  text-decoration: none;
+
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 999px;
+
+  transition:
+    color 0.2s ease,
+    background-color 0.2s ease,
+    border-color 0.2s ease;
 }
 
 .backButton:hover {
-  color: #3730a3;
+  background: #eef2ff;
+  border-color: #c7d2fe;
 }
 
-/* Details Grid */
+.backButton:focus-visible {
+  outline: 2px solid #6366f1;
+  outline-offset: 3px;
+}
+
+.backIcon {
+  transition: transform 0.2s ease;
+}
+
+.backButton:hover .backIcon {
+  transform: translateX(-3px);
+}
+
+/* Details grid */
 .detailsGrid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: 1fr;
   gap: 1.25rem;
+  margin-top: 1.25rem;
 }
 
-/* Responsive */
+/* Invalid / error states */
+.statusCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
 
-@media (max-width: 768px) {
-  .detailsGrid {
-    grid-template-columns: 1fr;
+  max-width: 26rem;
+  margin: 3rem auto;
+  padding: 2rem 1.5rem;
+
+  text-align: center;
+  background: #ffffff;
+  border: 1px solid #fecaca;
+  border-radius: 1rem;
+  box-shadow: 0 10px 25px -12px rgba(220, 38, 38, 0.25);
+}
+
+.statusIcon {
+  display: grid;
+  place-items: center;
+  width: 3rem;
+  height: 3rem;
+
+  color: #dc2626;
+  background: #fef2f2;
+  border-radius: 50%;
+}
+
+.statusText {
+  font-size: 0.9375rem;
+  font-weight: 500;
+  line-height: 1.5;
+  color: #334155;
+}
+
+.statusActions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-top: 0.25rem;
+}
+
+.primaryButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  padding: 0.625rem 1.25rem;
+
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #ffffff;
+
+  background-image: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+  border: none;
+  border-radius: 0.75rem;
+  box-shadow: 0 8px 18px -6px rgba(79, 70, 229, 0.55);
+
+  cursor: pointer;
+  transition:
+    transform 0.2s ease,
+    filter 0.2s ease;
+}
+
+.primaryButton:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.06);
+}
+
+.primaryButton:focus-visible,
+.secondaryLink:focus-visible {
+  outline: 2px solid #6366f1;
+  outline-offset: 3px;
+}
+
+.secondaryLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  padding: 0.625rem 1rem;
+
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #334155;
+  text-decoration: none;
+
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 0.75rem;
+
+  transition:
+    color 0.2s ease,
+    background-color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.secondaryLink:hover {
+  color: #4338ca;
+  background: #eef2ff;
+  border-color: #c7d2fe;
+}
+
+/* Loading skeletons */
+.skeletonBack,
+.skeletonHeader,
+.skeletonCard,
+.skeletonTitle,
+.skeletonLine {
+  background: linear-gradient(90deg, #f1f5f9 0%, #e2e8f0 50%, #f1f5f9 100%);
+  background-size: 200% 100%;
+  animation: shimmer 1.4s ease-in-out infinite;
+}
+
+.skeletonBack {
+  display: block;
+  width: 9rem;
+  height: 2.25rem;
+  margin-bottom: 1.5rem;
+  border-radius: 999px;
+}
+
+.skeletonHeader {
+  height: 13rem;
+  border-radius: 1.25rem;
+}
+
+.skeletonCard {
+  display: flex;
+  flex-direction: column;
+  gap: 0.875rem;
+
+  padding: 1.5rem;
+
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 1rem;
+  animation: none;
+}
+
+.skeletonTitle,
+.skeletonLine {
+  display: block;
+  height: 0.75rem;
+  border-radius: 999px;
+}
+
+.skeletonTitle {
+  width: 45%;
+  height: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.short {
+  width: 60%;
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+@keyframes shimmer {
+  from {
+    background-position: 200% 0;
+  }
+  to {
+    background-position: -200% 0;
   }
 }
 
-@media (max-width: 480px) {
+/* Responsive */
+@media (min-width: 640px) {
   .container {
-    padding: 1.5rem 1rem;
+    padding: 2.5rem 2rem 4rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .detailsGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  /* An odd last card spans the full row instead of leaving a hole */
+  .detailsGrid > :last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skeletonBack,
+  .skeletonHeader,
+  .skeletonTitle,
+  .skeletonLine {
+    animation: none;
+  }
+
+  .backButton,
+  .backIcon,
+  .primaryButton,
+  .secondaryLink {
+    transition: none;
   }
 }

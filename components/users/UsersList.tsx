@@ -1,6 +1,5 @@
 "use client";
-
-import { useState } from "react";
+import { ChevronDown, CircleAlert, RefreshCw } from "lucide-react";
 import { useGetUsersQuery } from "@/features/users/usersApi";
 import { setCurrentPage, showMore } from "@/features/users/usersSlice";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
@@ -24,14 +23,36 @@ export default function UsersList() {
   } = useGetUsersQuery();
 
   if (isLoading) {
-    return <p>Loading users...</p>;
+    return (
+      <section
+        className={styles.grid}
+        role="status"
+        aria-live="polite"
+        aria-label="Loading users"
+      >
+        {Array.from({ length: PAGE_SIZE }, (_, index) => (
+          <div key={index} className={styles.skeleton}>
+            <span className={styles.skeletonAvatar} />
+            <span className={styles.skeletonLine} />
+            <span className={`${styles.skeletonLine} ${styles.short}`} />
+          </div>
+        ))}
+        <span className={styles.srOnly}>Loading users...</span>
+      </section>
+    );
   }
 
   if (isError) {
     return (
-      <div>
-        <p>Unable to load users.</p>
-        <button onClick={() => refetch()}>Try Again</button>
+      <div className={styles.errorBox} role="alert">
+        <div className={styles.errorIcon}>
+          <CircleAlert size={24} aria-hidden="true" />
+        </div>
+        <p className={styles.errorText}>Unable to load users.</p>
+        <button onClick={() => refetch()} className={styles.retryButton}>
+          <RefreshCw size={16} aria-hidden="true" />
+          <span>Try Again</span>
+        </button>
       </div>
     );
   }
@@ -49,7 +70,7 @@ export default function UsersList() {
         ))}
       </section>
 
-      <div className={styles.pagination}>
+      <nav className={styles.pagination} aria-label="Pagination">
         {Array.from({ length: totalPages }, (_, index) => {
           const page = index + 1;
 
@@ -60,12 +81,14 @@ export default function UsersList() {
               className={
                 currentPage === page ? styles.activePage : styles.pageButton
               }
+              aria-label={`Page ${page}`}
+              aria-current={currentPage === page ? "page" : undefined}
             >
               {page}
             </button>
           );
         })}
-      </div>
+      </nav>
 
       {startIndex + visibleUsers.length < users.length && (
         <div className={styles.showMoreContainer}>
@@ -73,7 +96,12 @@ export default function UsersList() {
             onClick={() => dispatch(showMore())}
             className={styles.showMoreButton}
           >
-            Show More
+            <span>Show More</span>
+            <ChevronDown
+              size={18}
+              className={styles.chevron}
+              aria-hidden="true"
+            />
           </button>
         </div>
       )}

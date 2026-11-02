@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { LogOut, Users } from "lucide-react";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { login, logout } from "@/features/auth/authSlice";
 import type { ReactNode } from "react";
@@ -38,24 +39,46 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
   }, [dispatch, router]);
 
   if (isChecking || !isAuthenticated) {
-    return <p>Checking authentication...</p>;
+    return (
+      <div className={styles.shell}>
+        <div className={styles.loader} role="status" aria-live="polite">
+          <span className={styles.spinner} aria-hidden="true" />
+          <p>Checking authentication...</p>
+        </div>
+      </div>
+    );
   }
 
   return (
-    <>
+    <div className={styles.shell}>
       <header className={styles.header}>
-        <h2>Users Dashboard</h2>
+        <div className={styles.brand}>
+          <div className={styles.logo}>
+            <Users size={18} aria-hidden="true" />
+          </div>
+          <h2>Users Dashboard</h2>
+        </div>
 
         <div className={styles.headerActions}>
-          <span>{identifier}</span>
+          <div className={styles.userChip}>
+            <span className={styles.avatar} aria-hidden="true">
+              {identifier?.charAt(0).toUpperCase()}
+            </span>
+            <span className={styles.identifier}>{identifier}</span>
+          </div>
 
-          <button onClick={handleLogout} className={styles.logoutButton}>
-            Logout
+          <button
+            onClick={handleLogout}
+            className={styles.logoutButton}
+            aria-label="Logout"
+          >
+            <LogOut size={16} aria-hidden="true" />
+            <span>Logout</span>
           </button>
         </div>
       </header>
 
       {children}
-    </>
+    </div>
   );
 }
