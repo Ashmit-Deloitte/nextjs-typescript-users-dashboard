@@ -1,0 +1,53 @@
+.card {
+  display: block;
+  padding: 1.5rem;
+
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 0.75rem;
+
+  text-decoration: none;
+  color: inherit;
+
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+}
+
+.card:focus-visible {
+  outline: 2px solid #4f46e5;
+  outline-offset: 3px;
+}
+
+.name {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.username {
+  margin-top: 0.25rem;
+  font-size: 0.875rem;
+  color: #64748b;
+}
+
+.detail {
+  margin-top: 1rem;
+  font-size: 0.875rem;
+  color: #475569;
+}
+
+.company {
+  margin-top: 0.75rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid #e2e8f0;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #334155;
+}

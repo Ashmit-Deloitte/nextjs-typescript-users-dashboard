@@ -1,8 +1,15 @@
+import { getUsers } from "@/services/userService";
+import UsersList from "@/components/users/UsersList";
+import styles from "./users.module.css";
+
 export const instant = false;
-export default function UserDashboard() {
+
+export default async function UserDashboard() {
+  const users = await getUsers();
+
   return (
-    <>
-      <h1>list of users</h1>
-    </>
+    <main className={styles.container}>
+      <UsersList users={users} />
+    </main>
   );
 }
