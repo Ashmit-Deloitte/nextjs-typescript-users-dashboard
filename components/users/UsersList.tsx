@@ -1,5 +1,11 @@
 "use client";
-import { ChevronDown, CircleAlert, RefreshCw } from "lucide-react";
+import {
+  ChevronDown,
+  ChevronLeft,
+  ChevronRight,
+  CircleAlert,
+  RefreshCw,
+} from "lucide-react";
 import { useGetUsersQuery } from "@/features/users/usersApi";
 import { setCurrentPage, showMore } from "@/features/users/usersSlice";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
@@ -70,41 +76,65 @@ export default function UsersList() {
         ))}
       </section>
 
-      <nav className={styles.pagination} aria-label="Pagination">
-        {Array.from({ length: totalPages }, (_, index) => {
-          const page = index + 1;
-
-          return (
-            <button
-              key={page}
-              onClick={() => dispatch(setCurrentPage(page))}
-              className={
-                currentPage === page ? styles.activePage : styles.pageButton
-              }
-              aria-label={`Page ${page}`}
-              aria-current={currentPage === page ? "page" : undefined}
-            >
-              {page}
-            </button>
-          );
-        })}
-      </nav>
-
-      {startIndex + visibleUsers.length < users.length && (
-        <div className={styles.showMoreContainer}>
+      <div className={styles.bottomControls}>
+        <nav className={styles.pagination} aria-label="Pagination">
+          {/* Previous button */}
           <button
-            onClick={() => dispatch(showMore())}
-            className={styles.showMoreButton}
+            onClick={() => dispatch(setCurrentPage(currentPage - 1))}
+            disabled={currentPage === 1}
+            className={styles.pageButton}
+            aria-label="Previous page"
           >
-            <span>Show More</span>
-            <ChevronDown
-              size={18}
-              className={styles.chevron}
-              aria-hidden="true"
-            />
+            <ChevronLeft size={18} />
           </button>
-        </div>
-      )}
+
+          {/* Page numbers */}
+          {Array.from({ length: totalPages }, (_, index) => {
+            const page = index + 1;
+
+            return (
+              <button
+                key={page}
+                onClick={() => dispatch(setCurrentPage(page))}
+                className={
+                  currentPage === page ? styles.activePage : styles.pageButton
+                }
+                aria-label={`Page ${page}`}
+                aria-current={currentPage === page ? "page" : undefined}
+              >
+                {page}
+              </button>
+            );
+          })}
+
+          {/* Next button */}
+          <button
+            onClick={() => dispatch(setCurrentPage(currentPage + 1))}
+            disabled={currentPage === totalPages}
+            className={styles.pageButton}
+            aria-label="Next page"
+          >
+            <ChevronRight size={18} />
+          </button>
+        </nav>
+
+        {/* Show More */}
+        {startIndex + visibleUsers.length < users.length && (
+          <div className={styles.showMoreContainer}>
+            <button
+              onClick={() => dispatch(showMore())}
+              className={styles.showMoreButton}
+            >
+              <span>Show More</span>
+              <ChevronDown
+                size={18}
+                className={styles.chevron}
+                aria-hidden="true"
+              />
+            </button>
+          </div>
+        )}
+      </div>
     </>
   );
 }
