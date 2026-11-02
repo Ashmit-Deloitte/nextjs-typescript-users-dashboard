@@ -1,8 +1,12 @@
 "use client";
+
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useGetUserByIdQuery } from "@/features/users/usersApi";
 import styles from "./userDetails.module.css";
+
+import UserProfileHeader from "@/components/users/UserProfileHeader";
+import DetailSection from "@/components/users/DetailsSection";
 
 export default function UserDetailsPage() {
   const params = useParams<{ id: string }>();
@@ -37,102 +41,56 @@ export default function UserDetailsPage() {
     );
   }
 
+  const contactItems = [
+    {
+      label: "Email",
+      value: user.email,
+      href: `mailto:${user.email}`,
+    },
+    {
+      label: "Phone",
+      value: user.phone,
+      href: `tel:${user.phone}`,
+    },
+    {
+      label: "Website",
+      value: user.website,
+      href: `https://${user.website}`,
+      external: true,
+    },
+  ];
+
+  const addressItems = [
+    { label: "Street", value: user.address.street },
+    { label: "Suite", value: user.address.suite },
+    { label: "City", value: user.address.city },
+    { label: "Zipcode", value: user.address.zipcode },
+    {
+      label: "Coordinates",
+      value: `${user.address.geo.lat}, ${user.address.geo.lng}`,
+    },
+  ];
+
+  const companyItems = [
+    { label: "Company Name", value: user.company.name },
+    { label: "Catch Phrase", value: user.company.catchPhrase },
+    { label: "Business", value: user.company.bs },
+  ];
+
   return (
     <main className={styles.container}>
       <Link href="/users" className={styles.backButton}>
         <span aria-hidden="true">←</span> Back to Users
       </Link>
 
-      {/* Profile Header */}
-      <section className={styles.profileHeader}>
-        <div className={styles.avatar}>{user.name.charAt(0).toUpperCase()}</div>
+      <UserProfileHeader user={user} />
 
-        <div className={styles.profileInfo}>
-          <h1>{user.name}</h1>
-          <p className={styles.username}>@{user.username}</p>
-          <span className={styles.companyBadge}>{user.company.name}</span>
-        </div>
-      </section>
-
-      {/* Information Sections */}
       <div className={styles.detailsGrid}>
-        {/* Contact Information */}
-        <section className={styles.detailCard}>
-          <h2>Contact Information</h2>
+        <DetailSection title="Contact Information" items={contactItems} />
 
-          <div className={styles.detailItem}>
-            <span>Email</span>
-            <a href={`mailto:${user.email}`}>{user.email}</a>
-          </div>
+        <DetailSection title="Address" items={addressItems} />
 
-          <div className={styles.detailItem}>
-            <span>Phone</span>
-            <a href={`tel:${user.phone}`}>{user.phone}</a>
-          </div>
-
-          <div className={styles.detailItem}>
-            <span>Website</span>
-            <a
-              href={`https://${user.website}`}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              {user.website}
-            </a>
-          </div>
-        </section>
-
-        {/* Address */}
-        <section className={styles.detailCard}>
-          <h2>Address</h2>
-
-          <div className={styles.detailItem}>
-            <span>Street</span>
-            <p>{user.address.street}</p>
-          </div>
-
-          <div className={styles.detailItem}>
-            <span>Suite</span>
-            <p>{user.address.suite}</p>
-          </div>
-
-          <div className={styles.detailItem}>
-            <span>City</span>
-            <p>{user.address.city}</p>
-          </div>
-
-          <div className={styles.detailItem}>
-            <span>Zipcode</span>
-            <p>{user.address.zipcode}</p>
-          </div>
-
-          <div className={styles.detailItem}>
-            <span>Coordinates</span>
-            <p>
-              {user.address.geo.lat}, {user.address.geo.lng}
-            </p>
-          </div>
-        </section>
-
-        {/* Company */}
-        <section className={styles.detailCard}>
-          <h2>Company Details</h2>
-
-          <div className={styles.detailItem}>
-            <span>Company Name</span>
-            <p>{user.company.name}</p>
-          </div>
-
-          <div className={styles.detailItem}>
-            <span>Catch Phrase</span>
-            <p>{user.company.catchPhrase}</p>
-          </div>
-
-          <div className={styles.detailItem}>
-            <span>Business</span>
-            <p>{user.company.bs}</p>
-          </div>
-        </section>
+        <DetailSection title="Company Details" items={companyItems} />
       </div>
     </main>
   );

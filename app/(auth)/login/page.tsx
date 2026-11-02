@@ -6,8 +6,8 @@ import { useRouter } from "next/navigation";
 import { useAppDispatch } from "@/lib/hooks";
 import { login } from "@/features/auth/authSlice";
 
-import LoginBranding from "./components/LoginBranding";
-import LoginForm from "./components/LoginForm";
+import LoginBranding from "@/components/login/LoginBranding";
+import LoginForm from "@/components/login/LoginForm";
 
 import styles from "./login.module.css";
 

@@ -1,4 +1,4 @@
-import styles from "../login.module.css";
+import styles from "./LoginBranding.module.css";
 
 export default function LoginBranding() {
   return (

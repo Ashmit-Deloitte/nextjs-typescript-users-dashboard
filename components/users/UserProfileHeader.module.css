@@ -1,0 +1,68 @@
+.profileHeader {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
+}
+
+.avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  background: #eef2ff;
+  color: #4f46e5;
+  font-size: 2.5rem;
+  font-weight: 700;
+}
+
+.profileInfo h1 {
+  color: #0f172a;
+  font-size: 1.8rem;
+  font-weight: 700;
+}
+
+.username {
+  margin-top: 0.35rem;
+  color: #64748b;
+  font-size: 0.95rem;
+}
+
+.companyBadge {
+  display: inline-block;
+  margin-top: 0.8rem;
+  padding: 0.4rem 0.8rem;
+  border-radius: 20px;
+  background: #eef2ff;
+  color: #4338ca;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+@media (max-width: 480px) {
+
+  .profileHeader {
+    align-items: flex-start;
+    padding: 1.25rem;
+    gap: 1rem;
+  }
+
+  .avatar {
+    width: 65px;
+    height: 65px;
+    font-size: 1.8rem;
+  }
+
+  .profileInfo h1 {
+    font-size: 1.3rem;
+  }
+
+}

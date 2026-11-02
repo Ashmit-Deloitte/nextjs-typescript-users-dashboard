@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { validateLoginForm } from "@/features/auth/authValidation";
-import styles from "../login.module.css";
+import styles from "./LoginForm.module.css";
 
 interface LoginFormProps {
   onLogin: () => void;

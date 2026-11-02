@@ -1,0 +1,59 @@
+.detailCard {
+  padding: 1.5rem;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+}
+
+.detailCard h2 {
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.9rem;
+  border-bottom: 1px solid #e2e8f0;
+  color: #0f172a;
+  font-size: 1.1rem;
+  font-weight: 650;
+}
+
+.detailItem {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  margin-bottom: 1.1rem;
+  overflow-wrap: anywhere;
+}
+
+.detailItem:last-child {
+  margin-bottom: 0;
+}
+
+.detailItem span {
+  color: #64748b;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.detailItem p,
+.detailItem a {
+  color: #334155;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.detailItem a {
+  color: #4f46e5;
+  text-decoration: none;
+}
+
+.detailItem a:hover {
+  text-decoration: underline;
+}
+
+
+@media (max-width: 480px) {
+  .detailCard {
+    padding: 1.25rem;
+  }
+}
