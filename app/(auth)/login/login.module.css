@@ -1,0 +1,155 @@
+/* Main page container */
+.main {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 2rem 1rem;
+  margin: 0;
+
+  background-image: url("/images/mobile-bg.jpg");
+  background-size:cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* Login card */
+.card {
+  width: 100%;
+  max-width: 28rem;
+
+  padding: 2rem;
+
+  background-color: #ffffff;
+  border-radius: 1rem;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+}
+
+/* Branding section */
+.branding {
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.subtitle {
+  margin-top: 0.5rem;
+  font-size: 0.875rem;
+  color: #64748b;
+}
+
+/* Welcome heading */
+.heading {
+  margin-bottom: 1.5rem;
+}
+
+.headingTitle {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.headingSubtitle {
+  margin-top: 0.25rem;
+  font-size: 0.875rem;
+  color: #64748b;
+}
+
+/* Form */
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+}
+
+.label {
+  margin-bottom: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #334155;
+}
+
+/* Input fields */
+.input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+
+  font-size: 0.875rem;
+  color: #0f172a;
+
+  border: 1px solid #cbd5e1;
+  border-radius: 0.5rem;
+
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.input::placeholder {
+  color: #94a3b8;
+}
+
+.input:focus {
+  border-color: #6366f1;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.12);
+}
+
+.error {
+  color: #dc2626;
+  font-size: 0.875rem;
+}
+
+.success {
+  color: #16a34a;
+  font-size: 0.875rem;
+}
+
+/* Submit button */
+.submitButton {
+  width: 100%;
+  padding: 0.75rem;
+
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #ffffff;
+
+  background-color: #4f46e5;
+  border: none;
+  border-radius: 0.5rem;
+
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.submitButton:hover {
+  background-color: #4338ca;
+}
+
+.submitButton:focus-visible {
+  outline: 2px solid #6366f1;
+  outline-offset: 2px;
+}
+
+/* Desktop layout */
+@media (min-width: 768px) {
+  .main {
+    background-image: url("/images/desktop-bg.jpg");
+  }
+}
+
+/* Slightly more breathing room on larger screens */
+@media (min-width: 640px) {
+  .card {
+    padding: 2.5rem;
+  }
+}

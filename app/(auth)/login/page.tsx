@@ -1,45 +1,53 @@
+"use client";
 
+import { useState } from "react";
+import styles from "./login.module.css";
 export default function LoginPage() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
+
+  function handleSubmit(e: React.SubmitEvent<HTMLFormElement>) {
+    e.preventDefault();
+
+    setError("");
+    setSuccess("");
+
+    if (!email.trim() || !password.trim()) {
+      setError("Please fill in all fields.");
+      return;
+    }
+
+    setSuccess("Form submitted successfully!");
+    console.log({ email, password });
+  }
+
+  console.log(email);
+  console.log(password);
   return (
-    <main className="
-    flex items-center justify-center
-    px-4 py-8  
-    min-h-screen
-    bg-cover
-    bg-center
-    bg-no-repeat
-    bg-[url('/images/mobile-bg.jpg')]
-    md:bg-[url('/images/desktop-bg.jpg')]">
-      <div className="w-full max-w-md rounded-2xl bg-white p-8 shadow-lg sm:p-10">
-
+    <main className={styles.main}>
+      <div className={styles.card}>
         {/* Branding */}
-        <div className="mb-8 text-center">
-          <h1 className="text-2xl font-bold text-slate-900">
-            Users Dashboard
-          </h1>
+        <div className={styles.branding}>
+          <h1 className={styles.title}>Users Dashboard</h1>
 
-          <p className="mt-2 text-sm text-slate-500">
-            Manage and explore user information
-          </p>
+          <p className={styles.subtitle}>Manage and explore user information</p>
         </div>
 
         {/* Heading */}
-        <div className="mb-6">
-          <h2 className="text-xl font-semibold text-slate-900">
-            Welcome back
-          </h2>
-          <p className="mt-1 text-sm text-slate-500">
+        <div className={styles.heading}>
+          <h2 className={styles.headingTitle}>Welcome back</h2>
+
+          <p className={styles.headingSubtitle}>
             Please enter your credentials to sign in.
           </p>
         </div>
 
         {/* Login Form */}
-        <form className="space-y-5">
-          <div>
-            <label
-              htmlFor="email"
-              className="mb-2 block text-sm font-medium text-slate-700"
-            >
+        <form className={styles.form} onSubmit={handleSubmit}>
+          <div className={styles.formGroup}>
+            <label htmlFor="email" className={styles.label}>
               Email address
             </label>
 
@@ -49,15 +57,14 @@ export default function LoginPage() {
               type="email"
               placeholder="you@example.com"
               autoComplete="email"
-              className="w-full rounded-lg border border-slate-300 px-4 py-3 text-sm outline-none transition focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100"
+              className={styles.input}
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
             />
           </div>
 
-          <div>
-            <label
-              htmlFor="password"
-              className="mb-2 block text-sm font-medium text-slate-700"
-            >
+          <div className={styles.formGroup}>
+            <label htmlFor="password" className={styles.label}>
               Password
             </label>
 
@@ -67,14 +74,17 @@ export default function LoginPage() {
               type="password"
               placeholder="Enter your password"
               autoComplete="current-password"
-              className="w-full rounded-lg border border-slate-300 px-4 py-3 text-sm outline-none transition focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100"
+              className={styles.input}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
             />
           </div>
 
-          <button
-            type="submit"
-            className="w-full rounded-lg bg-indigo-600 py-3 text-sm font-semibold text-white transition hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-          >
+          {error && <p className={styles.error}>{error}</p>}
+
+          {success && <p className={styles.success}>{success}</p>}
+
+          <button type="submit" className={styles.submitButton}>
             Sign in
           </button>
         </form>
