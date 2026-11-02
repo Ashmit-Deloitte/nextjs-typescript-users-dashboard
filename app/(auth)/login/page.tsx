@@ -2,31 +2,33 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { useAppDispatch } from "@/lib/hooks";
+import { login } from "@/features/auth/authSlice";
 import styles from "./login.module.css";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
-  const router = useRouter();
   const [isChecking, setIsChecking] = useState(true);
+  const router = useRouter();
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
-    const isAuthenticated = localStorage.getItem("isAuthenticated") === "true";
+    const storedAuth = localStorage.getItem("isAuthenticated");
 
-    if (isAuthenticated) {
+    if (storedAuth === "true") {
+      dispatch(login());
       router.replace("/users");
     } else {
       setIsChecking(false);
     }
-  }, [router]);
+  }, [dispatch, router]);
 
   function handleSubmit(e: React.SubmitEvent<HTMLFormElement>) {
     e.preventDefault();
 
     setError("");
-    setSuccess("");
 
     if (!email.trim() || !password.trim()) {
       setError("Please fill in all fields.");
@@ -35,11 +37,10 @@ export default function LoginPage() {
 
     // Simulate successful authentication
     localStorage.setItem("isAuthenticated", "true");
+    dispatch(login());
     router.push("/users");
   }
 
-  console.log(email);
-  console.log(password);
   if (isChecking) {
     return <p>Checking authentication...</p>;
   }
@@ -100,8 +101,6 @@ export default function LoginPage() {
           </div>
 
           {error && <p className={styles.error}>{error}</p>}
-
-          {success && <p className={styles.success}>{success}</p>}
 
           <button type="submit" className={styles.submitButton}>
             Sign in

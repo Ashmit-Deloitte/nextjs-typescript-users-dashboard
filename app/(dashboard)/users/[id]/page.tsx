@@ -1,32 +1,40 @@
+"use client";
 import Link from "next/link";
-import { notFound } from "next/navigation";
-import { getUser } from "@/services/userService";
+import { useParams } from "next/navigation";
+import { useGetUserByIdQuery } from "@/features/users/usersApi";
 import styles from "./userDetails.module.css";
 
-interface UserDetailsProps {
-  params: Promise<{
-    id: string;
-  }>;
-}
+export default function UserDetailsPage() {
+  const params = useParams<{ id: string }>();
 
-export default async function UserDetailsPage({ params }: UserDetailsProps) {
-  const { id } = await params;
+  const id = Number(params.id);
+  const isValidId = /^\d+$/.test(params.id) && id > 0;
 
-  // Validate the ID
-  if (!/^\d+$/.test(id)) {
-    notFound();
+  const {
+    data: user,
+    isLoading,
+    isError,
+    refetch,
+  } = useGetUserByIdQuery(id, {
+    skip: !isValidId,
+  });
+
+  if (!isValidId) {
+    return <p>Invalid user ID.</p>;
   }
 
-  let user;
+  if (isLoading) {
+    return <p>Loading user details...</p>;
+  }
 
-  try {
-    user = await getUser(id);
-  } catch (error) {
-    if (error instanceof Error && error.message === "USER_NOT_FOUND") {
-      notFound();
-    }
-
-    throw error;
+  if (isError || !user) {
+    return (
+      <div>
+        <p>Unable to load user details. The user may not exist.</p>
+        <button onClick={() => refetch()}>Try Again</button>
+        <a href="/users">Back to Users</a>
+      </div>
+    );
   }
 
   return (
