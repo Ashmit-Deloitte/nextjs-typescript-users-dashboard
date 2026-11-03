@@ -14,7 +14,7 @@ A responsive user management dashboard built with **Next.js, TypeScript, and Red
 1. Clone the repository:
 
    ```bash
-   git clone "https://github.com/Ashmit-Deloitte/nextjs-typescript-users-dashboard.git"
+   git clone https://github.com/Ashmit-Deloitte/nextjs-typescript-users-dashboard.git
    ```
 
 2. Navigate to the project directory:
@@ -37,6 +37,15 @@ A responsive user management dashboard built with **Next.js, TypeScript, and Red
 
 5. Open [http://localhost:3000](http://localhost:3000) in your browser.
 
+### Production Build (Optional)
+
+To generate and run the optimized production build:
+
+```bash
+npm run build
+npm run start
+```
+
 ## 2. State Management
 
 **Redux Toolkit** is used for application-wide state management.
@@ -45,7 +54,7 @@ The implementation uses:
 
 - **Redux Toolkit:** Manages authentication state and pagination state.
 - **RTK Query:** Handles API requests, caching, loading states, and error handling for user data.
-- **React Hooks:** Manages local component state, such as login form inputs and validation errors.
+- **React Hooks:** Manage local component state, such as login form inputs and validation errors.
 
 The application fetches user data from the [JSONPlaceholder Users API](https://jsonplaceholder.typicode.com/users).
 
@@ -61,6 +70,6 @@ The following assumptions were made while completing the assignment:
 
 4. **User Details:** Each user card navigates to a dynamic route based on the user's ID. The detail page displays the available information returned by the API.
 
-5. **API Availability:** An appropriate loading state, error message, and retry mechanism are provided to handle API requests.
+5. **API Availability:** Loading states, error messages, and a retry mechanism are provided to handle API request failures.
 
 6. **Responsive Design:** The interface is designed to adapt to desktop, tablet, and mobile screen sizes.
