@@ -56,10 +56,10 @@ export default function UserDetailsClient() {
   if (!isValidId) {
     return (
       <StatusCard message="Invalid user ID.">
-        <a href="/users" className={styles.secondaryLink}>
+        <Link href="/users" className={styles.secondaryLink}>
           <ArrowLeft size={16} aria-hidden="true" />
           <span>Back to Users</span>
-        </a>
+        </Link>
       </StatusCard>
     );
   }
@@ -98,10 +98,10 @@ export default function UserDetailsClient() {
           <RefreshCw size={16} aria-hidden="true" />
           <span>Try Again</span>
         </button>
-        <a href="/users" className={styles.secondaryLink}>
+        <Link href="/users" className={styles.secondaryLink}>
           <ArrowLeft size={16} aria-hidden="true" />
           <span>Back to Users</span>
-        </a>
+        </Link>
       </StatusCard>
     );
   }

@@ -20,7 +20,7 @@ export default function LoginForm({ onLogin }: LoginFormProps) {
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState<LoginErrors>({});
 
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  function handleSubmit(e: React.SubmitEvent<HTMLFormElement>) {
     e.preventDefault();
 
     const validationErrors = validateLoginForm(identifier, password);
