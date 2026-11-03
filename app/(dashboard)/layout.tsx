@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { LogOut, Users } from "lucide-react";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { login, logout } from "@/features/auth/authSlice";
+import AuthLoader from "@/components/auth/AuthLoader";
 import type { ReactNode } from "react";
 import styles from "./dashboard.module.css";
 
@@ -41,10 +42,7 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
   if (isChecking || !isAuthenticated) {
     return (
       <div className={styles.shell}>
-        <div className={styles.loader} role="status" aria-live="polite">
-          <span className={styles.spinner} aria-hidden="true" />
-          <p>Checking authentication...</p>
-        </div>
+        <AuthLoader variant="dashboard" />
       </div>
     );
   }

@@ -8,6 +8,7 @@ import { login } from "@/features/auth/authSlice";
 
 import LoginBranding from "@/components/login/LoginBranding";
 import LoginForm from "@/components/login/LoginForm";
+import AuthLoader from "@/components/auth/AuthLoader";
 
 import styles from "./login.module.css";
 
@@ -41,10 +42,7 @@ export default function LoginPage() {
   if (isChecking) {
     return (
       <main className={styles.main}>
-        <div className={styles.loader} role="status" aria-live="polite">
-          <span className={styles.spinner} aria-hidden="true" />
-          <p>Checking authentication...</p>
-        </div>
+        <AuthLoader variant="login" />
       </main>
     );
   }
